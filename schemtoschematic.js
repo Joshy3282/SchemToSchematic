@@ -407,6 +407,14 @@ var blocksNamespace = {
 'minecraft:cobblestone_stairs[facing=west,half=top,shape=straight,waterlogged=false]':1077,
 'minecraft:cobblestone_stairs[facing=south,half=top,shape=straight,waterlogged=false]':1078,
 'minecraft:cobblestone_stairs[facing=north,half=top,shape=straight,waterlogged=false]':1079,
+'minecraft:polished_andesite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]':1072,
+'minecraft:polished_andesite_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]':1073,
+'minecraft:polished_andesite_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]':1074,
+'minecraft:polished_andesite_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]':1075,
+'minecraft:polished_andesite_stairs[facing=east,half=top,shape=straight,waterlogged=false]':1076,
+'minecraft:polished_andesite_stairs[facing=west,half=top,shape=straight,waterlogged=false]':1077,
+'minecraft:polished_andesite_stairs[facing=south,half=top,shape=straight,waterlogged=false]':1078,
+'minecraft:polished_andesite_stairs[facing=north,half=top,shape=straight,waterlogged=false]':1079,
 'minecraft:wall_sign[facing=north,waterlogged=false]':1090,
 'minecraft:wall_sign[facing=south,waterlogged=false]':1091,
 'minecraft:wall_sign[facing=west,waterlogged=false]':1092,
@@ -1933,6 +1941,11 @@ function schemtoschematic(arrayBuffer, callback) {
         if (~(index = namespaceKey.indexOf('_wall_sign'))) {
             namespaceKey = 'minecraft:wall_sign' + namespaceKey.substr(namespaceKey.indexOf('[', index));
         }
+
+        //https://github.com/PureGero/SchemToSchematic/pull/1
+        if (~(index = namespaceKey.indexOf('_trapdoor'))) {
+            namespaceKey = 'minecraft:oak_trapdoor' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
         
         if (!~namespaceKey.indexOf('wall_sign') && ~(index = namespaceKey.indexOf('_sign'))) {
             namespaceKey = 'minecraft:sign' + namespaceKey.substr(namespaceKey.indexOf('[', index));
@@ -1957,7 +1970,75 @@ function schemtoschematic(arrayBuffer, callback) {
         if (!~(index = namespaceKey.indexOf('_wall_head')) && ~(index = namespaceKey.indexOf('_head'))) {
             namespaceKey = 'minecraft:skeleton_skull' + namespaceKey.substr(namespaceKey.indexOf('[', index));
         }
-        
+
+        // https://github.com/PureGero/SchemToSchematic/pull/5/files
+        //More supports
+        //About stone
+        if (~(index = namespaceKey.indexOf('smooth_sandstone_slab'))) {
+            //recommend: meta=1
+            namespaceKey = namespaceKey.substr(0, index) + 'stone_slab' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+        if (~(index = namespaceKey.indexOf('smooth_sandstone_stairs'))) {
+            namespaceKey = namespaceKey.substr(0, index) + 'sandstone_stairs' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+        if (~(index = namespaceKey.indexOf('stone_brick_wall'))) {
+            namespaceKey = namespaceKey.substr(0, index) + 'cobblestone_wall' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+        if (~(index = namespaceKey.indexOf('sandstone_wall'))) {
+            namespaceKey = 'minecraft:birch_fence[east=false,north=false,south=false,waterlogged=false,west=false]';
+        }
+
+        if (~(index = namespaceKey.indexOf('lantern'))) {
+            namespaceKey = "minecraft:redstone_lamp[lit=false]";
+        }
+        //-----
+        if (~(index = namespaceKey.indexOf('diorite_wall'))) {
+            namespaceKey = namespaceKey.substr(0, index) + 'cobblestone_wall' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+        if (~(index = namespaceKey.indexOf('smooth_quartz_slab'))) {
+            //recommend: meta=7
+            namespaceKey = namespaceKey.substr(0, index) + 'stone_slab' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+
+        if (~(index = namespaceKey.indexOf('polished_andesite_stairs'))) {
+            namespaceKey = namespaceKey.substr(0, index) + 'quartz_stairs' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+        //About wood
+        if (~(index = namespaceKey.indexOf('stripped_spruce_wood'))) {
+            namespaceKey = namespaceKey.substr(0, index) + 'spruce_wood' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+        if (~(index = namespaceKey.indexOf('stripped_spruce_log'))) {
+            namespaceKey = namespaceKey.substr(0, index) + 'oak_log' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+        if (~(index = namespaceKey.indexOf('birch_trapdoor'))) {
+            namespaceKey = namespaceKey.substr(0, index) + 'oak_trapdoor' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+        if (~(index = namespaceKey.indexOf('jungle_trapdoor'))) {
+            namespaceKey = namespaceKey.substr(0, index) + 'oak_trapdoor' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+        if (~(index = namespaceKey.indexOf('spruce_trapdoor'))) {
+            namespaceKey = namespaceKey.substr(0, index) + 'oak_trapdoor' + namespaceKey.substr(namespaceKey.indexOf('[', index));
+        }
+
+        if (~(index = namespaceKey.indexOf('note_block'))) {
+            namespaceKey = 'minecraft:note_block[instrument=harp,note=0,powered=false]';
+        }
+
+        //State convert
+        if (~(index = namespaceKey.indexOf('in_wall=true'))) {
+            namespaceKey = namespaceKey.substr(0, index) + 'in_wall=false' + namespaceKey.substr(namespaceKey.indexOf(',', index));
+        }
+
         if (~(index = namespaceKey.indexOf('east='))) {
             namespaceKey = namespaceKey.substr(0, index) + 'east=false' + namespaceKey.substr(namespaceKey.indexOf(',', index));
         }
